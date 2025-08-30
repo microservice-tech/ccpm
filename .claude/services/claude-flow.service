@@ -1,0 +1,94 @@
+[Unit]
+Description=Claude Flow Service - GitHub Issue Processing and Automation
+Documentation=https://github.com/microservice-tech/ccpm
+After=network-online.target
+Wants=network-online.target
+Requires=network.target
+
+# Start after Docker if it's available (for container workflows)
+After=docker.service
+Wants=docker.service
+
+# Prevent conflicts with other GitHub-polling services
+Conflicts=github-poller.service github-webhook.service
+
+[Service]
+Type=simple
+User=claude-flow
+Group=claude-flow
+
+# Service executable and working directory
+ExecStart=/usr/bin/python3 /opt/claude-flow/claude-flow-service.py
+WorkingDirectory=/opt/claude-flow
+
+# Configuration
+Environment=PYTHONPATH=/opt/claude-flow
+Environment=CLAUDE_FLOW_CONFIG_PATH=/etc/claude-flow/config.json
+EnvironmentFile=-/etc/claude-flow/environment
+
+# Process management
+Restart=always
+RestartSec=30
+StartLimitInterval=300
+StartLimitBurst=5
+
+# If the service fails to start 5 times in 5 minutes, wait 10 minutes before trying again
+StartLimitAction=reboot-force
+
+# Graceful shutdown
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=60
+
+# Resource limits
+MemoryMax=2G
+MemoryHigh=1.5G
+CPUQuota=200%
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+
+# Network access (required for GitHub API)
+PrivateNetwork=no
+RestrictAddressFamilies=AF_INET AF_INET6
+
+# File system access
+ReadWritePaths=/tmp/claude-flow-issues /var/lib/claude-flow /var/log/claude-flow
+ReadOnlyPaths=/opt/claude-flow /etc/claude-flow
+TemporaryFileSystem=/tmp
+PrivateTmp=yes
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=claude-flow-service
+
+# Journal log settings
+LogLevelMax=info
+
+# Watchdog for health monitoring
+WatchdogSec=300
+NotifyAccess=main
+
+# Capabilities (minimal set)
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# Additional hardening
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@debug @mount @cpu-emulation @obsolete @privileged @reboot @swap
+
+[Install]
+WantedBy=multi-user.target
+Alias=claude-flow.service
