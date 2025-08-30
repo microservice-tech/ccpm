@@ -1,0 +1,15 @@
+# Core HTTP and API requirements
+requests>=2.31.0
+urllib3>=2.0.0
+
+# System monitoring and process management
+psutil>=5.9.0
+
+# Data structures and utilities
+dataclasses>=0.6; python_version<"3.7"
+
+# Optional: Better JSON handling
+orjson>=3.8.0
+
+# Optional: Enhanced logging
+coloredlogs>=15.0

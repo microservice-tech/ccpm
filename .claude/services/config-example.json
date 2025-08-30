@@ -1,0 +1,28 @@
+{
+  "github_token": "ghp_your_github_token_here",
+  "github_base_url": "https://api.github.com",
+  "repositories": [
+    {
+      "owner": "your-org",
+      "repo": "your-repo",
+      "url": "https://github.com/your-org/your-repo.git"
+    }
+  ],
+  "polling_interval": 300,
+  "max_concurrent_workers": 3,
+  "workflow_script_path": "/home/nic/Documents/development/epic-claude-flow-integration/.claude/scripts/workflow-template.sh",
+  "log_level": "INFO",
+  "log_file": "/var/log/claude-flow-service.log",
+  "state_file": "/tmp/claude-flow-service-state.json",
+  "pid_file": "/tmp/claude-flow-service.pid",
+  "workflow_timeout": 3600,
+  "issue_label": "ready-for-implementation",
+  "exclude_labels": [
+    "claude-flow-completed",
+    "claude-flow-processing"
+  ],
+  "environment_variables": {
+    "ANTHROPIC_API_KEY": "your_anthropic_api_key_here",
+    "GITHUB_TOKEN": "ghp_your_github_token_here"
+  }
+}
