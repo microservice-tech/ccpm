@@ -2,7 +2,7 @@
 name: install-by-integrating
 status: backlog
 created: 2025-08-30T19:27:40Z
-progress: 25%
+progress: 50%
 prd: .claude/prds/install-by-integrating.md
 github: https://github.com/microservice-tech/ccpm/issues/19
 ---

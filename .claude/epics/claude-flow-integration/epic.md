@@ -2,10 +2,10 @@
 name: claude-flow-integration
 status: in-progress
 created: 2025-08-29T22:36:37Z
-progress: 20%
+progress: 38%
 prd: .claude/prds/claude-flow-integration.md
 github: https://github.com/microservice-tech/ccpm/issues/1
-updated: 2025-08-30T20:15:40Z
+updated: 2025-08-30T21:05:16Z
 ---
 
 # Epic: Claude Flow Integration
